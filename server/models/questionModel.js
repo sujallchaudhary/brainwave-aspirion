@@ -6,6 +6,10 @@ const questionSchema = new mongoose.Schema({
         required:true,
         trim:true,
     },
+    parameter:{
+        type:String,
+        required:true,
+    },
     type:{
         type:String,
         required:true,
@@ -18,6 +22,10 @@ const questionSchema = new mongoose.Schema({
         type:String,
         required:true,
     },
+    options:{
+        type:Array,
+        required:true,
+    }
 });
 
 const Question = mongoose.model('Question', questionSchema);

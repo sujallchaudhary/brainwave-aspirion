@@ -2,7 +2,7 @@ const User = require('../models/userModel');
 
 const fetchUser = async (req, res) => {
     try {
-        const users = await User.find({where:{role:"user"}});
+        const users = await User.find({role:"user"});
         if(!users){
             return res.status(404).json({success:false,status:404,message:"No users found",data:null});
         }

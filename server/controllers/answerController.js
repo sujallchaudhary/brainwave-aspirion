@@ -13,7 +13,7 @@ const fetchAnswer = async (req, res) => {
 };
 const fetchAnswers = async (req, res) => {
     try{
-        const answers = await Answer.find({where:{userId:req.body._id}}).populate('questionId');
+        const answers = await Answer.find({userId:req.query.id});
         if(!answers){
             return res.status(404).json({success:false,status:404,message:"No answers found",data:null});
         }
@@ -26,11 +26,14 @@ const fetchAnswers = async (req, res) => {
 
 const createAnswer = async (req, res) => {
     try {
-        const { userId, questionId, answer } = req.body;
-        const answerCreated = await Answer.create({ userId, questionId, answer });
+        const { userId,answer} = req.body;
+        const answerCreated = await Answer.create({ userId,answer});
+        if (!answerCreated) {
+            return res.status(400).json({ success: false, status: 400, message: "Answer not created", data: null });
+        }
         return res.status(201).json({ success: true, status: 201, message: "Answer created successfully", data: answerCreated });
     } catch (error) {
-        return res.status(500).json({ success: false, status: 500, message: error, data: null });
+        return res.status(500).json({ success: false, status: 500, message:'internal sever error'+error, data: null });
         
     }
 };
